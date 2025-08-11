@@ -2,7 +2,7 @@
 title: This is a test page
 date: 1992-05-07
 tags: 
-draft: true
+draft: false
 ---
 
 This is a blank Quartz installation.
