@@ -1,5 +1,5 @@
 ---
-title: About me
+title: Seonwoo Kim
 date: 
 tags: 
 draft: false
