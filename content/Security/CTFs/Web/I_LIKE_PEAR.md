@@ -4,6 +4,10 @@ date: 2025-08-12
 tags:
   - web
   - ctf
+  - pear
+  - pearcmd
+  - phpliteadmin
+  - lfi2rce
 draft: false
 ---
 
