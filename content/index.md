@@ -4,7 +4,7 @@ date:
 tags: 
 draft: false
 ---
-> [!success] **\[ AI & Security Researcher \]**
+> [!success] **\[ AI & Security \]**
 > I am a researcher and engineer at the intersection of **AI** and **Security**. <br>
 > I believe their fusion is where the impossible becomes possible.  <br>
 > I am a relentless learner—at work, in academia, and beyond.<br>
