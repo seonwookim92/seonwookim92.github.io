@@ -22,7 +22,7 @@ Probably not the pear you're thinking of .. 🤔
 
 Initially there's nothing shown on the first page.
 
-![[Pasted image 20250812092619.png]]
+![[Insane_python-20250812142814920.png]]
 
 The core of the analysis is chaining two vulnerabilities lying on the web.
 1. Local File Inclusion(LFI) on `index.php` : We can load server-side local files using `include($_GET["file"]);` syntax. While it's filtering out various wrappers like `php://filter`, `http://`, it doesn't have any measure to protect direct access to local files with their names.
@@ -79,11 +79,11 @@ Let me try both.
 I used Burpsuite to capture the request to `/` and modified the path with the given path.
 Also, I modified `eval($_GET['cmd'])` to direct `shell_exec()` command.
 
-![[Pasted image 20250812103111.png]]
+![[Insane_python-20250812142814975.png]]
 
 Then, I could retrieve the response of the command injection output (id).
 
-![[Pasted image 20250812103454.png]]
+![[Insane_python-20250812142815020.png]]
 
 2. **Method 2**: man_dir
 
@@ -92,12 +92,12 @@ Then, I could retrieve the response of the command injection output (id).
 /vuln.php?file=/tmp/exec.php&c=id
 ```
 
-![[Pasted image 20250812103656.png]]
+![[Insane_python-20250812142815054.png]]
 
 While the server response with complaints, the command injection worked.
 
-![[Pasted image 20250812103735.png]]
+![[Insane_python-20250812142815086.png]]
 
 With this, by adding command on `c` param, I can easily run `/readflag` command.
 
-![[Pasted image 20250812103855.png]]
+![[Insane_python-20250812142815112.png]]
