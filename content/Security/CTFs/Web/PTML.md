@@ -108,4 +108,4 @@ Putting the plan into action was straightforward.
 
 3. **Upload and Verify:** I uploaded the crafted `exploit.svg` file through the web application. A moment later, a new request appeared on my Webhook.site page. And in its query parameters, the `flag` value I was looking for was clearly visible. ✅
 
-![[Pasted image 20250813102723.png]]
+![[Notes_API-20250813161308496.png]]
