@@ -19,27 +19,27 @@ null
 
 The index page shows "Login" and "Sign Up" buttons.
 
-![[Pasted image 20250812131458.png]]
+![[PTML-20250813091844214.png]]
 
 The "Sign Up" page takes username/email/password.
 
-![[Pasted image 20250812131551.png]]
+![[PTML-20250813091844255.png]]
 
 The "Login" page takes email/password.
 
-![[Pasted image 20250812131637.png]]
+![[PTML-20250813091844290.png]]
 
 First I signed up with a test account.
 
-![[Pasted image 20250812131741.png]]
+![[PTML-20250813091844354.png]]
 
 With the created account, I signed in, and encounter the following page.
 
-![[Pasted image 20250812131808.png]]
+![[PTML-20250813091844384.png]]
 
 When I click "+Add Todo" button, the input takes title/description/date.
 
-![[Pasted image 20250812131849.png]]
+![[PTML-20250813091844418.png]]
 
 Let's analyze its source code now.
 
@@ -186,7 +186,7 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 }%
 ```
 
-![[Pasted image 20250812133309.png]]
+![[PTML-20250813091844450.png]]
 
 Now, let's call `/api/updateTodo` to trigger IDOR with `id=1` and `value=0`.
 
@@ -262,4 +262,4 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 
 After this, when I sign in again on browser, I can find the flag.
 
-![[Pasted image 20250812135053.png]]
+![[PTML-20250813091844480.png]]
