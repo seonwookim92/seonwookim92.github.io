@@ -4,6 +4,7 @@ date: 2025-08-15
 tags:
   - web
   - ctf
+  - phptypejuggling
 draft: false
 ---
 ##### Link : [Switching Command](https://dreamhack.io/wargame/challenges/1081)

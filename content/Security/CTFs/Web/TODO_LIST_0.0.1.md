@@ -1,6 +1,6 @@
 ---
 title: "Dreamhack: TODO List 0.0.1"
-dat: 2025-08-12
+date: 2025-08-12
 tags:
   - web
   - ctf
