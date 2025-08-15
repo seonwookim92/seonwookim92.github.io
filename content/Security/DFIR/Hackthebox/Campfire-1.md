@@ -78,15 +78,15 @@ You must analyze these materials to determine if a Kerberoasting attack actually
 #### 3-2-1. Verify Evidence Files
 After extraction, you can see two folders: Domain Controller / Workstation.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_1.png]]
+![[campfire-1_1.png]]
 
 The Domain Controller folder only contains an Event Log file.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_2.png]]
+![[campfire-1_2.png]]
 
 The Workstation folder contains an Event Log file and a C drive dump file.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_3.png]]
+![[campfire-1_3.png]]
 
 #### 3-2-2. Extract Prefetch
 
@@ -114,7 +114,7 @@ CSV time line output will be saved to C:\Users\bokchee\Desktop\analysis\Triage\W
 
 The extracted CSV file can be analyzed using Timeline Explorer.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_7.png]]
+![[campfire-1_7.png]]
 
 ### 3-3. Problem Solving
 #### Q1. Can you analyze the domain controller's security logs to determine the date and time the Kerberoasting activity occurred?
@@ -131,15 +131,15 @@ To distinguish between normal TGS requests and malicious activity, consider the 
 
 Open the Domain Controller's Event Log with Event Log Explorer and apply a filter (Event ID = 4769).
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_4.png]]
+![[campfire-1_4.png]]
 
 Review the descriptions of the filtered logs to find one that meets the conditions.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_5.png]]
+![[campfire-1_5.png]]
 
 A request for an `MSSQLService` ticket with RC4 encryption that succeeded (0x0) is likely the Kerberoasting attack.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_6.png]]
+![[campfire-1_6.png]]
 
 The time of this log is: **2024-05-21 03:18:09**
 
@@ -158,18 +158,18 @@ After applying the filter and sorting by time ascending, you will get informatio
 
 The first command, `powershell -ep bypass`, suggests an attempt to allow subsequent script execution.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_8.png]]
+![[campfire-1_8.png]]
 
 The second log contains a very long script. The repeated appearance of the string "Enum" suggests it is a script for Active Directory enumeration.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_9.png]]
+![[campfire-1_9.png]]
 
 The last line, in particular, shows the path where the script was executed:
 : `C:\Users\alonzo.spire\Downloads\powerview.ps1`
 
 #### Q5. When was this script executed?
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_10.png]]
+![[campfire-1_10.png]]
 
 Check the XML value of the found log to confirm the time the event was recorded: **2024-05-21 03:16:32**
 
@@ -177,7 +177,7 @@ Check the XML value of the found log to confirm the time the event was recorded:
 
 Sort the extracted Prefetch data by time and analyze the files executed after the execution time of `powerview.ps1`.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_11.png]]
+![[campfire-1_11.png]]
 
 A binary located in the user's Download folder stands out from the other executables:
 : `C:\Users\alonzo.spire\Downloads\rubeus.exe`
@@ -186,6 +186,6 @@ Indeed, Rubeus is a tool used to perform attacks like Kerberoasting.
 
 #### Q7. When was the credential-dumping tool (`rubeus.exe`) executed?
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-1/campfire-1_12.png]]
+![[campfire-1_12.png]]
 
 The execution time of `rubeus.exe` is **2024-05-21 03:18:08**.

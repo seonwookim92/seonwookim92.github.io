@@ -49,7 +49,7 @@ The extracted CSV file can be analyzed using `Timeline Explorer`.
 Event ID 4624 signifies a successful logon event.
 Filtering by this, we can find a log where `Target: DESKTOP-887GK2L\CyberJunkie`.
 
-![[public/Images/content/Security/DFIR/LOGJAMMER/logjammer_1.png]]
+![[logjammer_1.png]]
 
 Login time: 27/03/2023 14:37:09
 
@@ -57,7 +57,7 @@ Login time: 27/03/2023 14:37:09
 
 Event ID 2004 can be checked to find events related to the addition of firewall policies.
 
-![[public/Images/content/Security/DFIR/LOGJAMMER/logjammer_2.png]]
+![[logjammer_2.png]]
 
 Checking the logs from after `cyberjunkie` logged in, we can find several logs.
 
@@ -72,7 +72,7 @@ Among them, we can identify "Metasploit C2 Bypass".
 Event ID 4719 is related to audit policy changes.
 Search based on this and view the event in Event Viewer.
 
-![[public/Images/content/Security/DFIR/LOGJAMMER/logjammer_3.png]]
+![[logjammer_3.png]]
 
 Subcategory name: Other Object Access Events
 
@@ -81,7 +81,7 @@ Subcategory name: Other Object Access Events
 Event Log 4698 is related to the registration of a scheduled task.
 One entry appears, and its name can be identified.
 
-![[public/Images/content/Security/DFIR/LOGJAMMER/logjammer_4.png]]
+![[logjammer_4.png]]
 
 HTB-AUTOMATION
 
@@ -89,7 +89,7 @@ HTB-AUTOMATION
 
 Check the Payload Detail.
 
-![[public/Images/content/Security/DFIR/LOGJAMMER/logjammer_5.png]]
+![[logjammer_5.png]]
 
 `C:\Users\CyberJunkie\Desktop\Automation-HTB.ps1`
 
@@ -101,7 +101,7 @@ Check the Payload Detail.
 
 Event ID 1117 is an event where Windows Defender blocked malware.
 
-![[public/Images/content/Security/DFIR/LOGJAMMER/logjammer_6.png]]
+![[logjammer_6.png]]
 
 The blocked tool is SharpHound.
 
@@ -111,7 +111,7 @@ The blocked tool is SharpHound.
 
 #### Q10. What action did the antivirus program take?
 
-![[public/Images/content/Security/DFIR/LOGJAMMER/logjammer_7.png]]
+![[logjammer_7.png]]
 
 Quarantine
 

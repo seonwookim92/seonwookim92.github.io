@@ -70,15 +70,15 @@ Clues to detect an AS-REP Roasting attack include:
 
 Based on this, we extract Event ID 4768 logs from the provided evtx file.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-2/campfire-2_1.png]]
+![[campfire-2_1.png]]
 
 By examining the descriptions of the logs based on the criteria above, we find one that matches the conditions.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-2/campfire-2_2.png]]
+![[campfire-2_2.png]]
 
 Checking the XML value confirms the time: 2024-05-29 06:36:40
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-2/campfire-2_3.png]]
+![[campfire-2_3.png]]
 
 #### Q2. What is the user account that the attacker targeted?
 
@@ -96,7 +96,7 @@ S-1-5-21-3239415629-1862073780-2394361899-1601
 
 By clearing the log filter and checking in chronological order, we can see the account that requests a service ticket immediately after.
 
-![[public/Images/content/Security/DFIR/CAMPFIRE-2/campfire-2_4.png]]
+![[campfire-2_4.png]]
 
 The attacker generates a service ticket request event from the same IP.
 Here, we can identify the account used.

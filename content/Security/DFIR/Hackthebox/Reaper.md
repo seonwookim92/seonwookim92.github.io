@@ -28,7 +28,7 @@ Your mission is to analyze the evidence focusing on the points below and report 
     - The process involves a sequence from the client to the server to the authentication server.
 
 #### 2-1-2. NTLM Relay Attack Flow
-![[public/Images/content/Security/DFIR/REAPER/reaper_13.png]]
+![[reaper_13.png]]
 
 ### 2-2. Windows Event Log Analysis
 - Event ID 4624: Successful Logon Event
@@ -85,17 +85,17 @@ ntlmrelay.pcapng  Security.evtx
 ### 3-2. Initial Analysis
 #### 3-2-1. Wireshark Analysis
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_1.png]]
+![[reaper_1.png]]
 
 Checking the Conversation, most of the communication occurs within the internal IP range of 172.17.x.x, with some communication to external IP ranges as well.
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_2.png]]
+![[reaper_2.png]]
 
 It appears that the most packets originated from the 172.17.79.x range.
 
 #### 3-2-2. Windows Event Log Analysis
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_3.png]]
+![[reaper_3.png]]
 
 There are only 51 Windows event logs in total, and they are concentrated on a few specific Event IDs. The computer is identified as `Forela-Wkstn001.forela.local`, which seems to be an account within the `forela.local` AD domain.
 
@@ -104,7 +104,7 @@ There are only 51 Windows event logs in total, and they are concentrated on a fe
 
 By checking the NBNS protocol, one of the naming protocols used in Active Directory, we can find a matching IP record.
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_4.png]]
+![[reaper_4.png]]
 
 When filtering for "nbns", we can see an NBNS protocol packet with the message "Refresh NB FORELA-WKSTN001<20>". This is a packet for renewing NetBIOS name information, which a PC periodically sends to the domain NBNS server to maintain its name registration.
 
@@ -112,7 +112,7 @@ By checking the requesting IP and the address information included in the "Addit
 
 #### Q2. What is the IP address of `Forela-Wkstn002`?
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_5.png]]
+![[reaper_5.png]]
 
 Similar to the previous method, we can find the IP address by looking for the "Refresh NB FORELA-WKSTN002" message in the NBNS protocol and checking its Source IP: 172.17.79.136
 
@@ -125,18 +125,18 @@ We can also check for anomalies in the PCAP file.
 
 First, let's continue to examine the nbns protocol in the PCAP file.
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_6.png]]
+![[reaper_6.png]]
 
 While the hostnames for the two previously identified IPs are confirmed, the IP 172.17.79.135 does not seem to have a hostname.
 
 Scrolling down further, we see numerous SMB2 protocol packets, most of which seem to be communicating with one of the two previously identified hosts. To investigate further, we apply a filter:
 `smb2 and ip.addr == 172.17.79.135`
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_7.png]]
+![[reaper_7.png]]
 
 The Info column shows which account was used for the session connection request: `arthur.kyle`
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_8.png]]
+![[reaper_8.png]]
 
 The event logs viewed through Event Log Explorer also confirm that a 4624 (successful logon) event occurred for this account from the same host.
 
@@ -148,7 +148,7 @@ The IP address can be confirmed from the previously checked logs: 172.17.79.135
 
 By further examining the SMB2 related packets in the PCAP file, we can identify the path that was attempted to be connected to.
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_9.png]]
+![[reaper_9.png]]
 
 Connection path: `\DC01\Trip`
 
@@ -157,7 +157,7 @@ Connection path: `\DC01\Trip`
 To check events related to logon authentication, we can refer to Event ID 4624.
 We apply a filter to check.
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_10.png]]
+![[reaper_10.png]]
 
 There is one log with Logon Type 3. Since the account used for the logon is also `arthur.kyle`, it is presumed that the attacker logged in remotely.
 
@@ -173,7 +173,7 @@ This can be confirmed from the previously checked event log: FORELA-WKSTN002, 17
 
 #### Q9. What is the UTC time of the logon event?
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_11.png]]
+![[reaper_11.png]]
 
 By opening the XML format of the event log, we can find the UTC time: 2024-07-31 04:55:16
 
@@ -182,6 +182,6 @@ By opening the XML format of the event log, we can find the UTC time: 2024-07-31
 By checking Event ID 5140 in the event logs, we can find events related to accessing a shared object.
 There is one such event in the given event logs.
 
-![[public/Images/content/Security/DFIR/REAPER/reaper_12.png]]
+![[reaper_12.png]]
 
 Share name: `\\*\IPC$`

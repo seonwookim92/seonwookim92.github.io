@@ -92,7 +92,7 @@ Compressed: 135790571
 
 In Wireshark, filter for `udp.port==5355` and examine the resulting packets.
 
-![[public/Images/content/Security/DFIR/NOXIOUS/noxious_1.png]]
+![[noxious_1.png]]
 
 You can see that all LLMNR Standard query responses are coming from one IP (172.17.79.135).
 
@@ -103,7 +103,7 @@ Based on this, the malicious IP address performing the LLMNR poisoning attack is
 Add a filter for the identified IP address and DHCP packets: `ip.addr==172.17.79.135 and dhcp`.
 Due to the nature of the DHCP protocol, a device sends its hostname to the DHCP server, so the hostname information can be exposed there.
 
-![[public/Images/content/Security/DFIR/NOXIOUS/noxious_2.png]]
+![[noxious_2.png]]
 
 Hostname: kali
 
@@ -112,7 +112,7 @@ Hostname: kali
 Due to the nature of LLMNR poisoning attacks, NTLM authentication is performed using the SMB protocol immediately after the poisoning.
 To find this, apply the filter `smb2 and ntlmssp`.
 
-![[public/Images/content/Security/DFIR/NOXIOUS/noxious_3.png]]
+![[noxious_3.png]]
 
 Several NTLM authentications are identified, and the username can be found in the Info tab.
 : john.deacon
@@ -123,7 +123,7 @@ The earliest timestamp among the NTLM authentication packets: 2024-06-24 11:18:3
 
 #### Q5. What is the typo that caused the credentials to be leaked, which the victim made when trying to navigate to a file share?
 
-![[public/Images/content/Security/DFIR/NOXIOUS/noxious_4.png]]
+![[noxious_4.png]]
 
 The typo that would cause a switch from the DNS protocol to LLMNR, enabling the poisoning, can be found by examining the packet details. The typo is: **DCC01**
 
@@ -131,7 +131,7 @@ The typo that would cause a switch from the DNS protocol to LLMNR, enabling the 
 
 Further investigation of the same packet reveals the NTLM Server Challenge value.
 
-![[public/Images/content/Security/DFIR/NOXIOUS/noxious_5.png]]
+![[noxious_5.png]]
 
 Server Challenge value: 601019d191f054f1
 
@@ -139,7 +139,7 @@ Server Challenge value: 601019d191f054f1
 
 This time, examine the details of the very next AUTH packet to find the NTProofStr.
 
-![[public/Images/content/Security/DFIR/NOXIOUS/noxious_6.png]]
+![[noxious_6.png]]
 
 NTProofStr value: c0cc803a6d9fb5a9082253a04dbd4cd4
 
@@ -157,7 +157,7 @@ john.deacon::FORELA:601019d191f054f1:c0cc803a6d9fb5a9082253a04dbd4cd4:0101000000
 
 Now, crack this with Hashcat.
 
-![[public/Images/content/Security/DFIR/NOXIOUS/noxious_7.png]]
+![[noxious_7.png]]
 
 Cracked password: `NotMyPassword0k?`
 
@@ -165,6 +165,6 @@ Cracked password: `NotMyPassword0k?`
 
 By checking the SMB2 traffic, you can easily find the share the connection was attempting to.
 
-![[public/Images/content/Security/DFIR/NOXIOUS/noxious_8.png]]
+![[noxious_8.png]]
 
 File share name: `\\DC01\DC-Confidential`

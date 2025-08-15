@@ -62,11 +62,11 @@ Online tools (e.g., [evtx-to-xml](https://www.coolutils.com/ko/online/EVTX-to-XM
 
 The `EvtxECmd` command can be used to convert all event logs in the `Logs` directory into a single csv file.
 
-![[public/Images/content/Security/DFIR/SMARTYPANTS/smartypants_1.png]]
+![[smartypants_1.png]]
 
 The converted file can be read using Timeline Explorer.
 
-![[public/Images/content/Security/DFIR/SMARTYPANTS/smartypants_2.png]]
+![[smartypants_2.png]]
 
 ### 3-3. Problem Solving
 #### Q1. The attacker accessed the machine where Dutch keeps important files via RDP on January 24, 2025. What was the exact login time?
@@ -84,13 +84,13 @@ Also, the time would be January 24, 2025.
 The next log to check is ID 4624 "An account was successfully logged on".
 We can search by applying a filter for the Event ID.
 
-![[public/Images/content/Security/DFIR/SMARTYPANTS/smartypants_4.png]]
+![[smartypants_4.png]]
 
 As can be seen in the log above, a login as `CTO-FILESVR\Dutch` is confirmed at 2025-01-24 10:52:07. This matches our initial suspicion that the `Dutch` account was used.
 
 Now let's check the RDP logs. This record can be found by filtering the `RemoteConnectionManager` channel by Event ID 1149.
 
-![[public/Images/content/Security/DFIR/SMARTYPANTS/smartypants_5.png]]
+![[smartypants_5.png]]
 
 We can see that an RDP session was connected with the `Dutch` account at 2025-01-24 10:15:14.
 
@@ -101,7 +101,7 @@ We can see that an RDP session was connected with the `Dutch` account at 2025-01
 **Related Event Log**
 - Microsoft-Windows-SmartScreen/Debug: Stores SmartScreen debugging logs.
 
-![[public/Images/content/Security/DFIR/SMARTYPANTS/smartypants_6.png]]
+![[smartypants_6.png]]
 
 After filtering for logs where the channel includes SmartScreen and the payload includes the message "isFileSupported", and sorting by time, the logs appear as above. The first one, `C:\Program Files (x86)\Edge\Application\msedge.exe`, is a browser software already installed on the system, so we skip it. The next one found in the downloads folder is `C:\Users\Dutch\Downloads\winrar-x64-701.exe`.
 
@@ -116,7 +116,7 @@ Full path: `C:\Users\Dutch\Downloads\Everything.exe`
 
 By checking the value of the "Time Created" field in the log found in the previous question, we can find the execution time of the file.
 
-![[public/Images/content/Security/DFIR/SMARTYPANTS/smartypants_7.png]]
+![[smartypants_7.png]]
 
 The execution time of `Everything.exe` is 2025-01-24 10:17:33.
 
@@ -124,7 +124,7 @@ The execution time of `Everything.exe` is 2025-01-24 10:17:33.
 
 Since SmartScreen logs also inspect document files, we can identify the documents opened by the attacker in the logs.
 
-![[public/Images/content/Security/DFIR/SMARTYPANTS/smartypants_8.png]]
+![[smartypants_8.png]]
 
 The file opened immediately after `Everything.exe` can be considered the first document opened and exfiltrated.
 Document path: `C:\Users\Dutch\Documents\2025- Board of directors Documents\Ministry of Defense Audit.pdf`
@@ -149,7 +149,7 @@ The execution time confirmed from the log is 2025-01-24 10:22:19.
 
 #### Q9. The attacker took measures to delete data on the host to prevent recovery. What utility was used for this?
 
-![[public/Images/content/Security/DFIR/SMARTYPANTS/smartypants_9.png]]
+![[smartypants_9.png]]
 
 From the logs, it is presumed that a file named `File Shredder` is related to file deletion, judging by its name.
 
@@ -157,7 +157,7 @@ From the logs, it is presumed that a file named `File Shredder` is related to fi
 
 Let's check the Security log first. Apply a filter for Channel "=Security" and sort by Time Created.
 
-![[public/Images/content/Security/DFIR/SMARTYPANTS/smartypants_3.png]]
+![[smartypants_3.png]]
 
 Ominously, the first log that appears when sorted by time is "Event log cleared" at 2025-01-24 10:28:41.
 This means that all events that occurred before this log was generated may have been deleted.

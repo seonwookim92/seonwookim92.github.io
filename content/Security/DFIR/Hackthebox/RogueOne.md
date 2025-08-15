@@ -152,6 +152,6 @@ MD5 Hash: 5bd547c6f5bfc4858fe62c8867acfbb5
 
 #### Q7. You have been praised by your manager for successfully analyzing the memory dump. The next day, your manager asks for an update on the malicious file. You check VirusTotal and see that the file has already been uploaded, likely by the reverse engineering team. Now you need to find out when the sample was first submitted to VirusTotal.
 
-![[public/Images/content/Security/DFIR/ROGUEONE/rogueone_1.png]]
+![[rogueone_1.png]]
 
 **10/08/2023 11:58:10**

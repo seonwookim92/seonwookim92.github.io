@@ -23,7 +23,7 @@ TBA
 ### 3-1. Download Evidence File
 1. Open the link below in a browser to download the file, or find `Trojan.zip` in the study materials and move it to your analysis OS: [Trojan.zip](...)
 2. Use `7z` to extract the archive. The password is `hacktheblue`.
-![[public/Images/content/Security/DFIR/TROJAN/trojan_1.png]]
+![[trojan_1.png]]
 
 ### 3-2. Initial Analysis
 #### 3-2-1. Artifact Types
@@ -37,7 +37,7 @@ There are a total of 3 types of artifacts included.
 
 By using Volatility on the memory file and checking the `windows.info` value, we can find the build information.
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_2.png]]
+![[trojan_2.png]]
 
 | Item                                       | Description                                                                                             |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
@@ -71,7 +71,7 @@ There are two ways to find the hostname:
 
 Let's first check the PCAP file, which is easier to check.
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_3.png]]
+![[trojan_3.png]]
 
 Fortunately, we can find the hostname in the NBNS traffic: DESKTOP-38NVPD0
 
@@ -79,7 +79,7 @@ Fortunately, we can find the hostname in the NBNS traffic: DESKTOP-38NVPD0
 
 In Wireshark, go to `File → Export Objects → HTTP` and apply a text filter for "zip".
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_4.png]]
+![[trojan_4.png]]
 
 Filename: Data_Recovery.zip
 
@@ -93,7 +93,7 @@ From the previously checked record, we can identify the source domain of the dow
 Since a process is created while the system is running, we need to analyze the memory.
 Using Volatility's `windows.pstree` module and searching for the archive name "data_recovery" yields significant results.
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_5.png]]
+![[trojan_5.png]]
 
 The process ID where `Recovery_Setup.bat` was executed: 484
 
@@ -105,11 +105,11 @@ Process path: `C:\Users\John\Downloads\Data_Recovery\Recovery_Setup.exe`
 
 We can view the actual file by opening the disk imaging file with FTK Imager.
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_6.png]]
+![[trojan_6.png]]
 
 After exporting the file, we can get the hash value using PowerShell's `Get-FileHash` function.
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_7.png]]
+![[trojan_7.png]]
 
 The extracted SHA256 hash value is: `C34601C5DA3501F6EE0EFCE18DE7E6145153ECFAC2CE2019EC52E1535A4B3193`
 
@@ -124,13 +124,13 @@ PS C:\Users\bokchee\Desktop\EZ tools > .\PECmd.exe -d "C:\Users\bokchee\Desktop\
 
 Then, open the CSV file with Timeline Explorer and check the "Source Created" field.
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_8.png]]
+![[trojan_8.png]]
 
 The value of this field is 2023-05-30 02:06:39. Considering that Prefetch records are created 10 seconds after a program is executed, the actual execution time is 2023-05-30 02:06:29.
 
 #### Q9. How many times was the malicious application executed?
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_9.png]]
+![[trojan_9.png]]
 
 The same log has an entry called `RUN_COUNT`. This value indicates the number of times the application was executed.
 
@@ -150,7 +150,7 @@ PS C:\Users\bokchee\Desktop\analysis\memory capture > strings .\memory.vmem | Se
 
 #### Q11. How many of the URLs accessed by the malicious application are listed as malicious on VirusTotal?
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_10.png]]
+![[trojan_10.png]]
 
 When checking all traffic from the victim PC (192.168.116.133) to the outside, apart from the connection attempt to 45.12.253.75, the rest appears to be normal web activity.
 
@@ -164,15 +164,15 @@ http://45.12.253.75/dll.php
 
 The results are as follows:
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_11.png]]
+![[trojan_11.png]]
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_12.png]]
+![[trojan_12.png]]
 (Also malicious when changing the address to .72)
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_13.png]]
+![[trojan_13.png]]
 (Also malicious when changing the address to .72)
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_14.png]]
+![[trojan_14.png]]
 
 A total of 4 URLs are listed as malicious.
 
@@ -180,9 +180,9 @@ A total of 4 URLs are listed as malicious.
 
 Among the php files received from the C2 address, the `puk.php` file, when extracted and examined, can be confirmed not to be an actual php file.
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_15.png]]
+![[trojan_15.png]]
 
-![[public/Images/content/Security/DFIR/TROJAN/trojan_16.png]]
+![[trojan_16.png]]
 
 #### Q13. Can you find any clues about the legitimate file the malicious file is trying to impersonate?
 

@@ -80,11 +80,11 @@ Open the sqlite3 file using SQLiteBrowser.
 Check the `phpbb_users` table to see a list of all user accounts.
 Scrolling to the bottom, you will find an account with the email domain `contractor.net`.
 
-![[public/Images/content/Security/DFIR/BUMBLEBEE/bbb_1.png]]
+![[bbb_1.png]]
 
 #### Q2. What is the IP address the contractor used to create the account?
 
-![[public/Images/content/Security/DFIR/BUMBLEBEE/bbb_2.png]]
+![[bbb_2.png]]
 
 IP Address: 10.10.0.78
 
@@ -93,7 +93,7 @@ IP Address: 10.10.0.78
 This time, let's look at the `phpbb_posts` table to see the list of posts.
 There are three posts, one of which was created from the same IP as the contractor (10.10.0.78).
 
-![[public/Images/content/Security/DFIR/BUMBLEBEE/bbb_3.png]]
+![[bbb_3.png]]
 
 The `post_id` is 9.
 
@@ -154,25 +154,25 @@ Searching for the keywords `login` and `10.10.0.78` shows records related to log
 However, this alone is not enough evidence to confirm a login as `administrator`.
 Instead, check the `phpbb_log` table in the Sqlite3 DB.
 
-![[public/Images/content/Security/DFIR/BUMBLEBEE/bbb_5.png]]
+![[bbb_5.png]]
 
 Login time: 26/04/2023 10:53:12
 
 #### Q6. Plaintext credentials for the LDAP connection are stored in the forum. What is the password?
 
-![[public/Images/content/Security/DFIR/BUMBLEBEE/bbb_6.png]]
+![[bbb_6.png]]
 
 Checking the `phpbb_config` table reveals the LDAP credentials: `Passw0rd1`
 
 #### Q7. What is the `User-Agent` of the `Administrator` account?
 
-![[public/Images/content/Security/DFIR/BUMBLEBEE/bbb_5.png]]
+![[bbb_5.png]]
 
 From the previously checked log records, we can identify the legitimate administrator's IP: 10.255.254.2
 
 Based on this, we can check `access.log` to find the User-Agent.
 
-![[public/Images/content/Security/DFIR/BUMBLEBEE/bbb_7.png]]
+![[bbb_7.png]]
 
 User-Agent: `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36`
 
@@ -180,7 +180,7 @@ User-Agent: `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 
 
 This can be confirmed in the `phpbb_log` table.
 
-![[public/Images/content/Security/DFIR/BUMBLEBEE/bbb_8.png]]
+![[bbb_8.png]]
 
 Time: 26/04/2023 10:53:51
 
@@ -188,7 +188,7 @@ Time: 26/04/2023 10:53:51
 
 Searching `access.log` for the attacker's IP (10.10.0.78) and the keyword "backup" reveals the database backup download record.
 
-![[public/Images/content/Security/DFIR/BUMBLEBEE/bbb_9.png]]
+![[bbb_9.png]]
 
 Download time: 26/04/2023 11:01:38
 
