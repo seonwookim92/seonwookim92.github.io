@@ -99,7 +99,6 @@ curl "http://host8.dreamhack.games:10313/ping?host=::%25eth0;cat%3Cflag.txt"
 
 Upon executing this command, the flag I had been waiting for was printed to the screen, right along with the ping results.
 
-![[Images/content/Security/CTFs/Web/EZ_command_injection/EZ_command_injection-20250815152322463.png]]
-
+![[/public/Images/content/Security/CTFs/Web/EZ_command_injection/EZ_command_injection-20250815152322463.png]]
 
 This was a very interesting challenge that required combining knowledge of the `ipaddress` library's unique parsing behavior with fundamental shell features.
