@@ -23,7 +23,7 @@ The scope of the investigation is limited to Notepad++ related artifacts, which 
 ### 2-2. Initial Analysis
 #### 2-2-1. Initial Analysis
 
-![[Images/content/Security/DFIR/NOTED/noted_1.png]]
+![[public/Images/content/Security/DFIR/NOTED/noted_1.png]]
 
 The provided evidence only contains the file list under `C:\Users\Simon.start\AppData\Roaming\Notepad++`.
 
@@ -39,7 +39,7 @@ Here is information on the key files:
 
 Opening the `config.xml` file shows a list of recently opened files at the top.
 
-![[Images/content/Security/DFIR/NOTED/noted_2.png]]
+![[public/Images/content/Security/DFIR/NOTED/noted_2.png]]
 
 The last file in the history appears to be a script related to AWS services, judging by its name.
 
@@ -50,7 +50,7 @@ The last file in the history appears to be a script related to AWS services, jud
 This time, we can find the path of the file opened by the attacker in the `session.xml` file.
 There are also two files in the `Backup\` path.
 
-![[Images/content/Security/DFIR/NOTED/noted_3.png]]
+![[public/Images/content/Security/DFIR/NOTED/noted_3.png]]
 
 Let's examine the contents of the `LootAndPurge.java` file.
 
@@ -92,7 +92,7 @@ Based on the content of the main function, the attacker intends to collect files
 
 The full path of this file can be found within the `session.xml` file.
 
-![[Images/content/Security/DFIR/NOTED/noted_4.png]]
+![[public/Images/content/Security/DFIR/NOTED/noted_4.png]]
 
 File path: `C:\Users\Simon.stark\Desktop\LootAndPurge.java`
 
@@ -124,7 +124,7 @@ full_value = high * 2**32 + (2**32 + low)
 
 The resulting value can be converted to UTC time [online](https://www.epochconverter.com/ldap).
 
-![[Images/content/Security/DFIR/NOTED/noted_5.png]]
+![[public/Images/content/Security/DFIR/NOTED/noted_5.png]]
 
 Therefore, the last file modification time is **2023-07-24 09:53:23**.
 
@@ -132,7 +132,7 @@ Therefore, the last file modification time is **2023-07-24 09:53:23**.
 
 Checking the attacker's last message, `YOU HAVE BEEN HACKED.txt`, reveals the message.
 
-![[Images/content/Security/DFIR/NOTED/noted_6.png]]
+![[public/Images/content/Security/DFIR/NOTED/noted_6.png]]
 
 At the bottom of the message, there are URLs that are all password-protected. They can be unlocked with the ZIP file password found in the Java code (`sdklY57BLghvyh5FJ#fion_7`).
 

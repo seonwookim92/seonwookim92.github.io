@@ -124,18 +124,18 @@ The `wtmp.out` file created by the script can be viewed with commands like `cat`
 ```
 
 Using the `sed` command and regular expressions, you can remove the quotes (") to make it more readable.
-![[Images/content/Security/DFIR/BRUTUS/brutus_1.png]]
+![[public/Images/content/Security/DFIR/BRUTUS/brutus_1.png]]
 
 #### 3-2-2. `auth.log` File Analysis
 The `auth.log` file can be read directly without any conversion.
-![[Images/content/Security/DFIR/BRUTUS/brutus_2.png]]
+![[public/Images/content/Security/DFIR/BRUTUS/brutus_2.png]]
 
 ### 3-3. Problem Solving
 #### Q1. Analyze the `auth.log` file. What is the IP address from which the attacker launched the brute-force attack?
 
 To find a brute-force attack in the `auth.log` file, you need to look for repeated instances of logs containing "Invalid user" and "Failed password" in a short period. This indicates frequent login failures (Incorrect Usernames or passwords) that occur during a brute-force attack.
 
-![[Images/content/Security/DFIR/BRUTUS/brutus_3.png]]
+![[public/Images/content/Security/DFIR/BRUTUS/brutus_3.png]]
 
 As can be seen in the log above, `auth.log` shows numerous "Invalid user" and "Failed password" messages around Mar 6 06:31:31.
 The source IP is consistently identified as `65.2.161.68`.
@@ -146,7 +146,7 @@ A clue that the brute-force attack was successful can be found in the same logs.
 
 We check the last part of the logs originating from the previously identified attacker IP `65.2.161.68` using the `tail` command.
 
-![[Images/content/Security/DFIR/BRUTUS/brutus_4.png]]
+![[public/Images/content/Security/DFIR/BRUTUS/brutus_4.png]]
 
 Two accounts show successful logins with the phrase "Accepted password": `root` and `cyberjunkie`.
 
@@ -157,7 +157,7 @@ The authentication time for the attacker's `root` account in the `auth.log` was 
 You can find the time the attacker directly opened the `pts/1` terminal by searching for the attacker's IP in the `wtmp.out` log.
 (You need to re-extract the logs with `TZ=UTC` included in the command to get the UTC time, separate from the previously extracted `wtmp.out`.)
 
-![[Images/content/Security/DFIR/BRUTUS/brutus_5.png]]
+![[public/Images/content/Security/DFIR/BRUTUS/brutus_5.png]]
 
 The time the attacker (`65.2.161.68`) logged in as `root` and created a terminal is confirmed as `2024-03-06 06:32:45`.
 
@@ -170,7 +170,7 @@ The session number assigned through a remote login is stored in the `auth.log` f
 └─$ cat auth.log | grep -A 20 "Accepted password"
 ```
 
-![[Images/content/Security/DFIR/BRUTUS/brutus_6.png]]
+![[public/Images/content/Security/DFIR/BRUTUS/brutus_6.png]]
 
 From the log above, we can see that the attacker was assigned session number 37 and created a terminal.
 
@@ -199,7 +199,7 @@ According to MITRE ATT&CK, this action corresponds to creating a local account f
 
 By continuing to check the records in `auth.log` after the successful login record, we can find a message related to the session ending.
 
-![[Images/content/Security/DFIR/BRUTUS/brutus_7.png]]
+![[public/Images/content/Security/DFIR/BRUTUS/brutus_7.png]]
 
 According to the log, the session ended at `2024-03-06 06:37:24`.
 
@@ -207,7 +207,7 @@ According to the log, the session ended at `2024-03-06 06:37:24`.
 
 The persistence backdoor account identified earlier is `cyberjunkie`. We check the actions performed by this account in `auth.log`.
 
-![[Images/content/Security/DFIR/BRUTUS/brutus_8.png]]
+![[public/Images/content/Security/DFIR/BRUTUS/brutus_8.png]]
 
 As can be seen in the log above, the attacker used the `/usr/bin/curl` command to download a script from `https://raw.githubusercontent.com/montysecurity/linper/main/linper.sh`.
 

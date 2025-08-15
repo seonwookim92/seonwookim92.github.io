@@ -79,14 +79,14 @@ The provided file is a pcap file. This means it is a capture of network traffic 
 
 This time, we will use Wireshark. After opening Wireshark, instead of capturing new traffic, you can open the pcap file via "Open".
 
-![[Images/content/Security/DFIR/ORIGINS/origins_1.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_1.png]]
 
 The initial information provided is that an FTP server is suspected as the starting point of the attack.
 Based on this, we add "ftp" to the Wireshark filter.
 
 Some logs are visible, and a significant portion appears to be login attempts. Most seem to fail with a "Login incorrect" message, but there is one instance that appears to succeed with a "Login successful" message.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_2.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_2.png]]
 
 #### 3-2-2. Auxiliary Data Analysis
 
@@ -94,7 +94,7 @@ Let's use the auxiliary analysis tools provided by Wireshark to get an overall p
 
 First is "Conversations". This analysis shows how much data was exchanged, broken down by protocol and host.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_3.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_3.png]]
 
 It shows that the most communication was with the IP 15.206.185.207. While communication with other hosts remains at the byte level, a relatively large amount of data (in kB) was exchanged with this IP. Since the volume is not huge, it seems that mostly text-based files or strings were exchanged.
 
@@ -103,13 +103,13 @@ It shows that the most communication was with the IP 15.206.185.207. While commu
 
 As confirmed in the initial analysis, it appears that the IP 15.206.185.207 gained FTP service login credentials through a small-scale brute-force attack.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_2.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_2.png]]
 
 #### Q2. Even if the accuracy is low, it is important to get more information about the attacker. Check the location information based on the IP. What city is it located in?
 
 Several websites offer services to check location information based on IP. While not entirely reliable, it can be used as a reference.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_4.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_4.png]]
 
 A check on [ipinfo](https://ipinfo.io) shows that the IP is located in Mumbai.
 
@@ -117,7 +117,7 @@ A check on [ipinfo](https://ipinfo.io) shows that the IP is located in Mumbai.
 
 If you "Follow TCP Stream" on a packet from the FTP protocol, the entire stream is displayed.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_5.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_5.png]]
 
 The banner that appears at the very beginning shows the FTP application version: `vsFTPd 3.0.5`
 
@@ -125,9 +125,9 @@ The banner that appears at the very beginning shows the FTP application version:
 
 The Time column, which was previously displayed as Relative Time, can be changed in the "View - Time Display Format" menu.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_6.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_6.png]]
 
-![[Images/content/Security/DFIR/ORIGINS/origins_7.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_7.png]]
 
 The attack started at 2024-05-03 04:12:54 UTC.
 
@@ -135,13 +135,13 @@ The attack started at 2024-05-03 04:12:54 UTC.
 
 If you "Follow TCP Stream" on the packet containing the "Login successful" string, the associated packet stream will be displayed. This includes the valid credentials.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_9.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_9.png]]
 
 The credentials the attacker used to successfully log in: `forela-ftp:ftprocks69$`
 
 #### Q6. What command did the attacker use to download files from the FTP server for data exfiltration?
 
-![[Images/content/Security/DFIR/ORIGINS/origins_10.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_10.png]]
 
 It appears the attacker used the `RETR` command to download documents.
 
@@ -151,14 +151,14 @@ It appears the attacker used the `RETR` command to download the files `Maintenan
 
 These files can be extracted via the "File - Export Objects - FTP-DATA" menu.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_11.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_11.png]]
 
-![[Images/content/Security/DFIR/ORIGINS/origins_12.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_12.png]]
 
 The two files identified earlier appear as extractable files.
 The PDF file contains the password for the backup server.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_13.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_13.png]]
 
 The password revealed in the document is: `**B@ckup2024!**`
 
@@ -166,7 +166,7 @@ The password revealed in the document is: `**B@ckup2024!**`
 
 This information can be found in the other file, `s3_bucket.txt`.
 
-![[Images/content/Security/DFIR/ORIGINS/origins_14.png]]
+![[public/Images/content/Security/DFIR/ORIGINS/origins_14.png]]
 
 S3 bucket address: `https://2023-coldstorage.s3.amazonaws.com`
 

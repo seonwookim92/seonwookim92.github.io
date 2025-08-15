@@ -20,9 +20,9 @@ use nextjs 👶
 
 When I first encountered this challenge, the first thing I looked at was the UI and its client-side code. There was an obvious "give me the flag" button, but clicking it did nothing.
 
-![[Pasted image 20250813112710.png]]
+![[Baby-nextjs-20250815135702211.png]]
 
-![[Pasted image 20250813112741.png]]
+![[Baby-nextjs-20250815135709861.png]]
 
 Opening the developer tools and inspecting `page.js` revealed the reason immediately.
 

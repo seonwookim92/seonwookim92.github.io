@@ -56,12 +56,12 @@ Recently, an unidentified UltraVNC program was discovered on a system within the
 ### 3-2. Initial Analysis
 #### 3-2-1. Initial Analysis 1
 
-![[Images/content/Security/DFIR/UNIT42/unit42_1.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_1.png]]
 
 When the file is opened in Event Log Explorer, the logs are displayed in a table format.
 Information such as log type, date/time, Event ID, and computer is displayed.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_2.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_2.png]]
 
 The lower part of the UI shows a detailed description of the selected log.
 
@@ -70,17 +70,17 @@ The lower part of the UI shows a detailed description of the selected log.
 
 You can use the filter function to filter by Event ID.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_3.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_3.png]]
 
 Enter 11 for the Event ID.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_4.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_4.png]]
 
 The filtering result shows that 56 logs remain.
 
 #### Q2. Every time a process is created in memory, a log with Event ID 1 is recorded, which includes the command line, hash, process path, parent process path, etc. This information is useful for analyzing malicious activities that have occurred on the system. What malicious process was executed on the infected system?
 
-![[Images/content/Security/DFIR/UNIT42/unit42_5.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_5.png]]
 
 As before, filtering by Event ID 1 yields 6 logs.
 Each description shows the path of the executed process, its hash value, etc.
@@ -89,11 +89,11 @@ Since process names are often disguised to be similar or identical to legitimate
 
 You can search by hash value on VirusTotal.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_6.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_6.png]]
 
 For a legitimate file, a search by hash value will mostly show "Undetected" as above.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_7.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_7.png]]
 
 However, for a malicious file, various malicious activities are shown based on previously analyzed data.
 
@@ -106,7 +106,7 @@ Then, by examining the surrounding logs, you can find an Event ID 22 (DNS Query)
 
 This suggests that the site was visited around that time.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_8.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_8.png]]
 
 It appears the victim used Dropbox.
 
@@ -115,7 +115,7 @@ It appears the victim used Dropbox.
 Based on the problem description, filter for Event ID 2 file time change logs.
 Also, check the log description to find the PDF file.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_9.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_9.png]]
 
 The log record shows that the time was changed to 2024-01-14 08:10:06.
 
@@ -123,7 +123,7 @@ The log record shows that the time was changed to 2024-01-14 08:10:06.
 
 This time, filter by the string "once.cmd". In addition, it would be good to focus on Event ID 11 for file creation logs.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_10.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_10.png]]
 
 The identified full path is `C:\Users\CyberJunkie\AppData\Roaming\Photo and Fax Vn\Photo and vn 1.1.2\install\F97891C\WindowsVolume\Games\once.cmd`.
 
@@ -131,7 +131,7 @@ The identified full path is `C:\Users\CyberJunkie\AppData\Roaming\Photo and Fax 
 
 Filter by Event ID 22.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_11.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_11.png]]
 
 Excluding the previously identified Dropbox-related URL, the only other domain it attempted to connect to is `www.example.com`.
 
@@ -140,7 +140,7 @@ Excluding the previously identified Dropbox-related URL, the only other domain i
 Network connection related logs are recorded with Event ID 3.
 Filter by this.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_12.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_12.png]]
 
 One log appears. The IP it tried to connect to is `93.184.216.34`.
 
@@ -148,6 +148,6 @@ One log appears. The IP it tried to connect to is `93.184.216.34`.
 
 Process termination records are logged with Event ID 5. Filtering by this yields one log.
 
-![[Images/content/Security/DFIR/UNIT42/unit42_13.png]]
+![[public/Images/content/Security/DFIR/UNIT42/unit42_13.png]]
 
 The process terminated at 2024-02-14 03:41:58.

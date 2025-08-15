@@ -296,7 +296,7 @@ Use the `filescan` module to extract the file list.
 
 Then search for the string `passwords.txt`.
 
-![[Images/content/Security/DFIR/RECOLLECTION/recollection_1.png]]
+![[public/Images/content/Security/DFIR/RECOLLECTION/recollection_1.png]]
 
 The full path of the file is: `\Device\HarddiskVolume2\Users\user\AppData\Local\Microsoft\Edge\User Data\ZxcvbnData\3.0.0.0\passwords.txt`
 
@@ -313,13 +313,13 @@ PS C:\Users\user\Downloads> .\b0ad704122d9cffddd57ec92991a1e99fc1ac02d5b4d8fd317
 
 Searching for the hash value on VirusTotal reveals that the executable is malicious.
 
-![[Images/content/Security/DFIR/RECOLLECTION/recollection_2.png]]
+![[public/Images/content/Security/DFIR/RECOLLECTION/recollection_2.png]]
 
 The Imphash can be found in the Details tab: d3b592cd9481e4f053b5362e22d61595
 
 #### Q13. When was the malicious file found above created?
 
-![[Images/content/Security/DFIR/RECOLLECTION/recollection_3.png]]
+![[public/Images/content/Security/DFIR/RECOLLECTION/recollection_3.png]]
 
 Creation time according to VirusTotal: 2022-06-22 11:49:04
 
@@ -379,7 +379,7 @@ We open the extracted file in sqlitebrowser.
 
 The `urls` table shows the visited sites.
 
-![[Images/content/Security/DFIR/RECOLLECTION/recollection_4.png]]
+![[public/Images/content/Security/DFIR/RECOLLECTION/recollection_4.png]]
 
 The SIEM the user tried to download: **wazuh**
 

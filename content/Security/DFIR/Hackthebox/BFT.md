@@ -106,7 +106,7 @@ FLARE-VM 06/23/2025 22:29:23
 #### 3-2-2. Open with Timeline Explorer
 The extracted CSV file can be effectively analyzed using Timeline Explorer.
 
-![[Images/content/Security/DFIR/BFT/bft_1.png]]
+![[public/Images/content/Security/DFIR/BFT/bft_1.png]]
 
 ### 3-3. Problem Solving
 #### Q1. Simon Stark was attacked by an adversary on February 13th. He downloaded a ZIP file from a link in an email. What is this file?
@@ -115,14 +115,14 @@ Based on the problem description, we need to find a ZIP file.
 The MFT analyzed with Timeline Explorer includes extension information.
 We search by adding the filter `Contains "ZIP"`.
 
-![[Images/content/Security/DFIR/BFT/bft_2.png]]
+![[public/Images/content/Security/DFIR/BFT/bft_2.png]]
 
 We can see a total of 5 ZIP files.
 Of these, two files were downloaded on February 13th: `Stage-20240213T093324Z-001.zip` and `KAPE.zip`.
 
 The other files, `invoice.zip` and `invoices.zip`, appear to be the result of extracting the `Stage-20240213T093324Z-001.zip` file, judging by their parent path.
 
-![[Images/content/Security/DFIR/BFT/bft_3.png]]
+![[public/Images/content/Security/DFIR/BFT/bft_3.png]]
 
 Checking the creation time of `invoice.zip` reveals something suspicious. The creation date is 1980-01-01 08:00:00, which is significantly in the past compared to other timestamps, suggesting it might have been manipulated using a technique like Timestomping.
 
@@ -133,13 +133,13 @@ Therefore, the malicious ZIP file is `Stage-20240213T093324Z-001.zip`.
 
 If we clear the filter for the file we found and sort by creation time, we can identify another file with the same name right below it.
 
-![[Images/content/Security/DFIR/BFT/bft_4.png]]
+![[public/Images/content/Security/DFIR/BFT/bft_4.png]]
 
 The string `:Zone.Identifier` is appended to the file extension. When a file is downloaded from the internet, the Windows system attaches a stream named `Zone.Identifier` to store information about the file's origin.
 
 Let's examine its content.
 
-![[Images/content/Security/DFIR/BFT/bft_5.png]]
+![[public/Images/content/Security/DFIR/BFT/bft_5.png]]
 
 The `HostUrl` value contains the address from which the user downloaded the file.
 ```
@@ -148,7 +148,7 @@ https://storage.googleapis.com/drive-bulk-export-anonymous/20240213T093324.039Z/
 
 #### Q3. What is the full path and name of the malicious file that was executed and connected to the C2 server?
 
-![[Images/content/Security/DFIR/BFT/bft_6.png]]
+![[public/Images/content/Security/DFIR/BFT/bft_6.png]]
 
 By filtering by the malicious ZIP file name and sorting by creation time, we can see the extracted files, which are in a folder named after the ZIP file.
 
@@ -167,14 +167,14 @@ The `invoice.bat` file we identified is 286 bytes, which is small enough to be f
 
 To find the file's offset, we check the "Entry Number".
 
-![[Images/content/Security/DFIR/BFT/bft_7.png]]
+![[public/Images/content/Security/DFIR/BFT/bft_7.png]]
 
 The Entry Number for this file is 23436.
 Since each entry has a fixed size of 1024 bytes (1KB), we can calculate the actual location: 23436 * 1024 = 23998464 = 0x16E3000.
 
 Using this offset, we can open the `$MFT` file with a hex editor like HxD to view its contents directly.
 
-![[Images/content/Security/DFIR/BFT/bft_8.png]]
+![[public/Images/content/Security/DFIR/BFT/bft_8.png]]
 
 The beginning of the offset shows raw data and the filename, and the actual content starts at address 0x16E3120.
 

@@ -93,7 +93,7 @@ jinglebell.zip  Torrincase
 
 The artifact structure suggests it is related to the Windows Push Notification Service (WNS) within the C drive.
 
-![[Images/content/Security/DFIR/JINGLEBELL/jinglebell_1.png]]
+![[public/Images/content/Security/DFIR/JINGLEBELL/jinglebell_1.png]]
 
 Opening the `wpndatabase.db` file reveals DB tables related to notifications.
 
@@ -102,13 +102,13 @@ Opening the `wpndatabase.db` file reveals DB tables related to notifications.
 
 Checking the `Notification` table reveals multiple messages related to Slack.
 
-![[Images/content/Security/DFIR/JINGLEBELL/jinglebell_2.png]]
+![[public/Images/content/Security/DFIR/JINGLEBELL/jinglebell_2.png]]
 
 #### Q2. What is the name of the competitor company to which Torrin is suspected of leaking data?
 
 Opening the records related to Toast (notification) messages reveals the company name.
 
-![[Images/content/Security/DFIR/JINGLEBELL/jinglebell_3.png]]
+![[public/Images/content/Security/DFIR/JINGLEBELL/jinglebell_3.png]]
 
 **Company Name: PrimeTech Innovations**
 
@@ -118,19 +118,19 @@ Opening the records related to Toast (notification) messages reveals the company
 
 #### Q4. What is the name of the channel where they had their conversation?
 
-![[Images/content/Security/DFIR/JINGLEBELL/jinglebell_4.png]]
+![[public/Images/content/Security/DFIR/JINGLEBELL/jinglebell_4.png]]
 
 **Channel Name: forela-secrets-leak**
 
 #### Q5. What is the password for the archive server?
 
-![[Images/content/Security/DFIR/JINGLEBELL/jinglebell_5.png]]
+![[public/Images/content/Security/DFIR/JINGLEBELL/jinglebell_5.png]]
 
 Password: `Tobdaf8Qip$re@1`
 
 #### Q6. What is the URL provided to Torrin for uploading files?
 
-![[Images/content/Security/DFIR/JINGLEBELL/jinglebell_6.png]]
+![[public/Images/content/Security/DFIR/JINGLEBELL/jinglebell_6.png]]
 
 `https://drive.google.com/drive/folders/1vW97VBmxDZUIEuEUG64g5DLZvFP-Pdll?usp=sharing`
 
