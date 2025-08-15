@@ -105,19 +105,15 @@ Prime: 0xd25b92240e1b823c18eef7fe44a10c916b51c53e5232b6f9bb12d26ae6ab6062e296571
 Alice sends her key to Bob. Key: 0xcc6fa70e26a6002f934221bf6c1829242a13a1bf639b8c9da7f8b98a98fff565b47d2a582c3ca813ca3ebef53fa07c5b97948881b0c7e016ac2d1affe4ef074531e8395ae1afb9e816f5e1ed63b58f3c40cd126e78f7970ddc27fbfe0e6aa51324c88918fc816101c0aafb355a2f066ef59ece291f898f4140e321bba9230235
 
 Let's inturrupt !
-
 >> 1
 
 Bob sends his key to Alice. Key: 0x1faa306556ef0b52abeb831cc9b06e692f6b4a5d38f6309459845a756839a9aecac14d85cb12354fcc7032b1c9ae49ebbd8469d5264d652b4e9554a38ea5f4c266b12d941a89cc52b5537a6ce325f667b932b088b6c438b292641ddacebe4677e317915065ef0fcaf724c8c61076497710ce04e715b5e2ee40d2b05e2eeb3b81
 
 Let's inturrupt !
-
 >> 1
 
 They are sharing the part of flag
-
 Alice: e48e9174a9103e249f4bb809e13d58d49283e2438954799030be4854328adacbeb310c79bce3e91719f218158359af0d
-
 Bob: 2a69648d494907e551b69b74676f2e528644a526e5f7bc8b6300f1bd8ad5f091a9e40939960ea5bd0ad2ceff23a14f96
 ```
 
@@ -183,19 +179,12 @@ Running the script successfully recovered the flag.
 % venv/bin/python exploit.py 
 
 [+] Opening connection to host8.dreamhack.games on port 17250: Done
-
 [*] Sent malicious key '1' to Bob.
-
 [*] Sent malicious key '1' to Alice.
-
 [+] Encrypted Flag Part 1 (Alice): e48e9174a9103e249f4bb809e13d58d49283e2438954799030be4854328adacbeb310c79bce3e91719f218158359af0d
-
 [+] Encrypted Flag Part 2 (Bob): 2a69648d494907e551b69b74676f2e528644a526e5f7bc8b6300f1bd8ad5f091a9e40939960ea5bd0ad2ceff23a14f96
-
 [*] Calculated AES key: c4ca4238a0b923820dcc509a6f75849b
-
 [+] FLAG: DH{6**REDACTED**4}
-
 [*] Closed connection to host8.dreamhack.games port 17250
 ```
 
