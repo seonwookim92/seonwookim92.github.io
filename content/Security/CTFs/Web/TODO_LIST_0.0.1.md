@@ -262,4 +262,4 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 
 After this, when I sign in again on browser, I can find the flag.
 
-![[TODO_LIST_0.0.1-20250815140157495.png]]
+![[public/Images/content/Security/CTFs/Web/EZ_command_injection/EZ_command_injection-20250815152322463.png]]
