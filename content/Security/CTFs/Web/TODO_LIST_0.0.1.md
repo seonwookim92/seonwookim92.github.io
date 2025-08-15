@@ -1,6 +1,6 @@
 ---
 title: "Dreamhack: TODO List 0.0.1"
-date: 2025-08-12
+dat: 2025-08-12
 tags:
   - web
   - ctf
@@ -15,31 +15,31 @@ draft: false
 null
 ```
 
-##### Solve
+# Solve
 
 The index page shows "Login" and "Sign Up" buttons.
 
-![[PTML-20250813091844214.png]]
+![[TODO_LIST_0.0.1-20250815140032658.png]]
 
 The "Sign Up" page takes username/email/password.
 
-![[PTML-20250813091844255.png]]
+![[TODO_LIST_0.0.1-20250815140047207.png]]
 
 The "Login" page takes email/password.
 
-![[PTML-20250813091844290.png]]
+![[TODO_LIST_0.0.1-20250815140100109.png]]
 
 First I signed up with a test account.
 
-![[PTML-20250813091844354.png]]
+![[TODO_LIST_0.0.1-20250815140111782.png]]
 
 With the created account, I signed in, and encounter the following page.
 
-![[PTML-20250813091844384.png]]
+![[TODO_LIST_0.0.1-20250815140121028.png]]
 
 When I click "+Add Todo" button, the input takes title/description/date.
 
-![[PTML-20250813091844418.png]]
+![[TODO_LIST_0.0.1-20250815140135631.png]]
 
 Let's analyze its source code now.
 
@@ -186,7 +186,7 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 }%
 ```
 
-![[PTML-20250813091844450.png]]
+![[TODO_LIST_0.0.1-20250815140149518.png]]
 
 Now, let's call `/api/updateTodo` to trigger IDOR with `id=1` and `value=0`.
 
@@ -262,4 +262,4 @@ Note: Unnecessary use of -X or --request, POST is already inferred.
 
 After this, when I sign in again on browser, I can find the flag.
 
-![[PTML-20250813091844480.png]]
+![[TODO_LIST_0.0.1-20250815140157495.png]]
