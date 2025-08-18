@@ -10,7 +10,8 @@
 
 ### 개인 프로젝트들
 - Spot Micro + AI Integration
-
+- Agentic AI for Bughunting
+- Agentic AI for Forensics
 
 
 ### 개인 연구
