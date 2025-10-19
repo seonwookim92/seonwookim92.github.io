@@ -1,3 +1,9 @@
+---
+title: "LLM from Scratch #1"
+date:
+tags:
+draft: true
+---
 
 
 
